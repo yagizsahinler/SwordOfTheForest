@@ -37,9 +37,4 @@ public class GameController : MonoBehaviour
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }
 
-    public void PlayerTakeDamage(int damage)
-    {
-        healthBar.TakeDamage(damage);
-    }
-
 }

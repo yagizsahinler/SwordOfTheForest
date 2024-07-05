@@ -5,26 +5,22 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Slider healthSlider;
-    public int maxHealth = 100;
-    private int currentHealth;
-
-    void Start()
+    public Slider slider;
+    public Gradient gradient;
+    public Image fill;
+    
+    public void SetMaxHealth(int health)
     {
-        currentHealth = maxHealth;
-        healthSlider.maxValue = maxHealth;
-        healthSlider.value = currentHealth;
+        slider.maxValue = health;
+        slider.value = health;
+
+        fill.color = gradient.Evaluate(1f);
     }
-
-    // Update is called once per frame
-    public void TakeDamage(int damage)
+    
+    public void SetHealth(int health)
     {
-        currentHealth -= damage;
-        healthSlider.value = currentHealth;
+        slider.value = health;
 
-        if (currentHealth <= 0)
-        {
-            Debug.Log("GameOver");
-        }
+        fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }

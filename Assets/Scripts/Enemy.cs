@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             // Ana karakterin canını 2 azalt
-            gameController.PlayerTakeDamage(2);
 
             // Düşmanı yok et
             Destroy(gameObject);
