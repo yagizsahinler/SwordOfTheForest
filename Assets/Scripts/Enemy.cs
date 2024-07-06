@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour
             // Ana karakterin canını 2 azalt
 
             // Düşmanı yok et
-            Destroy(gameObject);
         }
     }
 }

@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
 
-        //check the mouse clicks for transition between attack animations
+        /*/check the mouse clicks for transition between attack animations
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Mouse clicked!");
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Attack2 Triggered");
             }
             isAttack1 = !isAttack1;
-        }
+        }/*/
     }
 
     void OnCollisionEnter2D(Collision2D collision)
