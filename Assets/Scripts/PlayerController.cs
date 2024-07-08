@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private bool isGrounded;
     private SpriteRenderer _spriteRenderer;
-    private bool isAttack1 = true;
+    //private bool isAttack1 = true;
 
     void Start()
     {
