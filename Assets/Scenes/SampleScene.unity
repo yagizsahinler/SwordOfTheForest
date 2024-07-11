@@ -731,7 +731,7 @@ Transform:
   m_GameObject: {fileID: 923439875}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.048, y: -4.123, z: 0.0089475345}
+  m_LocalPosition: {x: 6.048, y: -3.75, z: 0.0089475345}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1333,7 +1333,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   attackPoint: {fileID: 1558192635}
-  attackRange: 0.53
+  attackRange: 0.8
   attackDamage: 100
   attackRate: 2
 --- !u!1 &1410881868
@@ -1911,6 +1911,10 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 446564082}
+    - target: {fileID: 4824140014994213960, guid: 18e80e53d7a6e564c9ee8fd432519025, type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 5959597230981319891, guid: 18e80e53d7a6e564c9ee8fd432519025, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -1918,6 +1922,14 @@ PrefabInstance:
     - target: {fileID: 5959597230981319891, guid: 18e80e53d7a6e564c9ee8fd432519025, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5959597230981319891, guid: 18e80e53d7a6e564c9ee8fd432519025, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809312385753873916, guid: 18e80e53d7a6e564c9ee8fd432519025, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

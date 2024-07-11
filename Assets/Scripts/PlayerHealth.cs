@@ -19,13 +19,21 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        /*/if(Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(20);
-        }
+        }/*/
 
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Enemy") // Düşman prefabınızın tag'ini değiştirin
+        {
+            TakeDamage(2); // Düşman tarafından verilen hasarı ayarlayın
+        }
+        Debug.Log("hasar alındı!");
+    }
     void TakeDamage (int damage)
     {
         currentHealth -= damage;

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 838282471434998161}
   m_Layer: 0
   m_Name: Slime_Spiked_Hit_3
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ba60a5d502f73a4ba06ffed089cb50d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   speed: 2
+  maxHealth: 100
 --- !u!50 &3222719453534410340
 Rigidbody2D:
   serializedVersion: 4
