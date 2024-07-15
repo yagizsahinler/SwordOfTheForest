@@ -1333,7 +1333,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   attackPoint: {fileID: 1558192635}
-  attackRange: 0.8
+  attackRange: 0.5
   attackDamage: 100
   attackRate: 2
 --- !u!1 &1410881868
