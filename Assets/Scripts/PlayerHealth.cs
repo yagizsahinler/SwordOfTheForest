@@ -2,48 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
 
-    public HealthBar healthBar;
+    public Slider slider;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        slider.maxValue = maxHealth;
+        slider.value = currentHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeHealth(int amount)
     {
-        /*/if(Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(20);
-        }/*/
+        currentHealth += amount;
+        slider.value = currentHealth;
+
         if(currentHealth <= 0)
         {
+            gameObject.SetActive(false);
             GameOver();
         }
 
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Enemy") // Düşman prefabınızın tag'ini değiştirin
-        {
-            TakeDamage(2); // Düşman tarafından verilen hasarı ayarlayın
-        }
-        Debug.Log("hasar alındı!");
-    }
-    void TakeDamage (int damage)
-    {
-        currentHealth -= damage;
-
-        healthBar.SetHealth(currentHealth);
     }
 
     void GameOver()

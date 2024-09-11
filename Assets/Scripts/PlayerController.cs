@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private bool isGrounded;
     private SpriteRenderer _spriteRenderer;
-    //private bool isAttack1 = true;
+
+    public Player_Combat player_Combat;
 
     void Start()
     {
@@ -41,22 +42,10 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
 
-        /*/check the mouse clicks for transition between attack animations
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("Mouse clicked!");
-            if (isAttack1)
-            {
-                _animator.SetTrigger("attack1");
-                Debug.Log("Attack1 Triggered");
-            }
-            else
-            {
-                _animator.SetTrigger("attack2");
-                Debug.Log("Attack2 Triggered");
-            }
-            isAttack1 = !isAttack1;
-        }/*/
+            player_Combat.Attack();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
