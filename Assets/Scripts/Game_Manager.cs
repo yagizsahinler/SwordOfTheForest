@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Game_Manager : MonoBehaviour
 {
-    public Game_Manager instance;
+    public static Game_Manager instance;
     
     public GameObject player;
 
@@ -23,6 +23,7 @@ public class Game_Manager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); // GameManager sahne geçişlerinde yok olmaz
+            Debug.Log("GameManager sahneler arası geçişte korundu.");
         }
         else
         {
@@ -61,6 +62,7 @@ public class Game_Manager : MonoBehaviour
     {
         if (scene.name == "GameOver")
         {
+            Debug.Log("Game Over sahnesine geçildi."); // Sahne geçişinin başarılı olduğunu kontrol eder
             GameObject finalScoreObj = GameObject.Find("FinalScoreText");
             if (finalScoreObj != null)
             {
@@ -68,7 +70,16 @@ public class Game_Manager : MonoBehaviour
                 if (finalScoreText != null)
                 {
                     finalScoreText.text = "Final Score: " + score.ToString();
+                    Debug.Log("Final Score güncellendi: " + score.ToString()); // Puanın güncellendiğini kontrol eder
                 }
+                else
+                {
+                    Debug.LogError("FinalScoreText bileşeni bulunamadı."); // Hata mesajı, bileşen bulunamazsa
+                }
+            }
+            else
+            {
+                Debug.LogError("FinalScoreText objesi bulunamadı."); // Hata mesajı, obje bulunamazsa
             }
         }
     }
