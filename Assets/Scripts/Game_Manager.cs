@@ -7,27 +7,24 @@ using UnityEngine.SceneManagement;
 public class Game_Manager : MonoBehaviour
 {
     public static Game_Manager instance;
-    
-    public GameObject player;
 
-    public Timer timer;
+    public GameObject player;
+    public Timer timer; // Timer referansı
     public float spawnTimer;
 
     public int score = 0;
-    public Text scoreText;
-
+    public Text scoreText; // Skor UI referansı
 
     public void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // GameManager sahne geçişlerinde yok olmaz
-            Debug.Log("GameManager sahneler arası geçişte korundu.");
+            DontDestroyOnLoad(gameObject); // Sahne geçişlerinde yok olmasın
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Başka bir GameManager varsa, yenisini yok et
         }
     }
 
@@ -40,47 +37,83 @@ public class Game_Manager : MonoBehaviour
     void UpdateScoreUI()
     {
         if (scoreText != null)
-            scoreText.text = "Score: " + score.ToString();
+        {
+            scoreText.text = "Score: " + score.ToString(); // UI'da skoru güncelle
+        }
     }
 
     public void OnPlayerDeath()
     {
-        SceneManager.LoadScene("GameOver"); // "GameOver" sahnesine geçiş yap
+        SceneManager.LoadScene("GameOver"); // GameOver sahnesine geçiş yap
     }
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        Debug.Log("OnEnable: sceneLoaded event eklendi.");
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        Debug.Log("OnDisable: sceneLoaded event kaldırıldı.");
     }
 
+    // Sahne yüklendiğinde tetiklenen fonksiyon
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "GameOver")
+        // Eğer oyun sahnesindeysek (Level sahnesi), referansları tekrar bul ve ata
+        if (scene.name == "Level 1") // Sahne adını düzenle
         {
-            Debug.Log("Game Over sahnesine geçildi."); // Sahne geçişinin başarılı olduğunu kontrol eder
-            GameObject finalScoreObj = GameObject.Find("FinalScoreText");
-            if (finalScoreObj != null)
+            // Timer ve ScoreText referanslarını sahnedeki objelerden al
+            GameObject timerObj = GameObject.Find("Timer"); // Timer objesinin adı "Timer" olmalı
+            if (timerObj != null)
             {
-                Text finalScoreText = finalScoreObj.GetComponent<Text>();
-                if (finalScoreText != null)
-                {
-                    finalScoreText.text = "Final Score: " + score.ToString();
-                    Debug.Log("Final Score güncellendi: " + score.ToString()); // Puanın güncellendiğini kontrol eder
-                }
-                else
-                {
-                    Debug.LogError("FinalScoreText bileşeni bulunamadı."); // Hata mesajı, bileşen bulunamazsa
-                }
+                timer = timerObj.GetComponent<Timer>(); // Timer componentini al
+            }
+
+            GameObject scoreTextObj = GameObject.Find("Score_Text"); // ScoreText objesinin adı "ScoreText" olmalı
+            if (scoreTextObj != null)
+            {
+                scoreText = scoreTextObj.GetComponent<Text>(); // ScoreText componentini al
+                UpdateScoreUI(); // UI güncelle
+            }
+        }
+        else if (scene.name == "Game Over")
+        {
+            StartCoroutine(UpdateFinalScore()); // GameOver sahnesine geçtiğimizde final skoru güncelle
+        }
+    }
+
+    IEnumerator UpdateFinalScore()
+    {
+        yield return new WaitForSeconds(0.1f); // Kısa bir gecikme
+
+        Debug.Log("Game Over sahnesine geçildi.");
+        GameObject finalScoreObj = GameObject.Find("FinalScoreText");
+
+        if (finalScoreObj != null)
+        {
+            Text finalScoreText = finalScoreObj.GetComponent<Text>();
+            if (finalScoreText != null)
+            {
+                finalScoreText.text = "Final Score: " + score.ToString();
+                Debug.Log("Final Score güncellendi: " + score.ToString());
             }
             else
             {
-                Debug.LogError("FinalScoreText objesi bulunamadı."); // Hata mesajı, obje bulunamazsa
+                Debug.LogError("FinalScoreText bileşeni bulunamadı.");
             }
         }
+        else
+        {
+            Debug.LogError("FinalScoreText objesi bulunamadı.");
+        }
+    }
+
+    public void ResetScore()
+    {
+        score = 0; // Skoru sıfırla
+        UpdateScoreUI(); // UI'ı güncelle
     }
 }
