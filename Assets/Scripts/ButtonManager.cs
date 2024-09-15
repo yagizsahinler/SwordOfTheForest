@@ -22,4 +22,14 @@ public class ButtonManager : MonoBehaviour
         Debug.Log("QuitGame called!");
         Application.Quit(); // Uygulamayı kapat
     }
+
+    public void Controls()
+    {
+        SceneManager.LoadScene("How To Play");
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
 }

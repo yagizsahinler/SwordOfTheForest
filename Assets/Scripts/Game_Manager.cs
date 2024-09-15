@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Game_Manager : MonoBehaviour
 {
     public static Game_Manager instance;
 
     public GameObject player;
-    public Timer timer; // Timer referansı
     public float spawnTimer;
+
+    private float startTime = 0;
+    private float currentTime;
+    private bool timerActive = true;
+    public static float finalTime;
 
     public int score = 0;
     public Text scoreText; // Skor UI referansı
@@ -20,18 +25,34 @@ public class Game_Manager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Sahne geçişlerinde yok olmasın
+            DontDestroyOnLoad(this.gameObject); // Sahne geçişlerinde yok olmasın
         }
-        else
+        else if (instance != this)
         {
-            Destroy(gameObject); // Başka bir GameManager varsa, yenisini yok et
+            Destroy(this.gameObject); // Başka bir GameManager varsa, yenisini yok et
         }
+    }
+
+    public void Start()
+    {
+        currentTime = 0;
+        Debug.Log("Game started at: " + currentTime);
+        startTime = Time.time;
     }
 
     public void AddScore(int amount)
     {
         score += amount;
         UpdateScoreUI();
+    }
+
+    public void Update()
+    {
+        if (timerActive)
+        {
+            currentTime = Time.time - startTime;
+        }
+        TimeSpan time = TimeSpan.FromSeconds(currentTime);
     }
 
     void UpdateScoreUI()
@@ -50,13 +71,11 @@ public class Game_Manager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        Debug.Log("OnEnable: sceneLoaded event eklendi.");
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        Debug.Log("OnDisable: sceneLoaded event kaldırıldı.");
     }
 
     // Sahne yüklendiğinde tetiklenen fonksiyon
@@ -65,13 +84,6 @@ public class Game_Manager : MonoBehaviour
         // Eğer oyun sahnesindeysek (Level sahnesi), referansları tekrar bul ve ata
         if (scene.name == "Level 1") // Sahne adını düzenle
         {
-            // Timer ve ScoreText referanslarını sahnedeki objelerden al
-            GameObject timerObj = GameObject.Find("Timer"); // Timer objesinin adı "Timer" olmalı
-            if (timerObj != null)
-            {
-                timer = timerObj.GetComponent<Timer>(); // Timer componentini al
-            }
-
             GameObject scoreTextObj = GameObject.Find("Score_Text"); // ScoreText objesinin adı "ScoreText" olmalı
             if (scoreTextObj != null)
             {
@@ -79,19 +91,23 @@ public class Game_Manager : MonoBehaviour
                 UpdateScoreUI(); // UI güncelle
             }
         }
-        else if (scene.name == "Game Over")
+        else if (scene.name == "GameOver")
         {
-            StartCoroutine(UpdateFinalScore()); // GameOver sahnesine geçtiğimizde final skoru güncelle
+            timerActive = false;
+            finalTime = currentTime;
+            
+            StartCoroutine(UpdateFinalScoreAndTime()); // GameOver sahnesine geçtiğimizde final skoru ve süreyi güncelle
         }
     }
 
-    IEnumerator UpdateFinalScore()
+    IEnumerator UpdateFinalScoreAndTime()
     {
         yield return new WaitForSeconds(0.1f); // Kısa bir gecikme
 
         Debug.Log("Game Over sahnesine geçildi.");
-        GameObject finalScoreObj = GameObject.Find("FinalScoreText");
 
+        // Final Score'u güncelle
+        GameObject finalScoreObj = GameObject.Find("FinalScoreText");
         if (finalScoreObj != null)
         {
             Text finalScoreText = finalScoreObj.GetComponent<Text>();
