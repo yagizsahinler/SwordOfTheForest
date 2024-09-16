@@ -8,13 +8,19 @@ public class Player_Combat : MonoBehaviour
     public float weaponRange = 1f;
     public LayerMask enemyLayer;
     public int damage = 1;
-    
-    public Animator anim;
 
+    public Animator anim;
+    public float attackCooldown = 1f; // Saldırı için bekleme süresi
+    private bool canAttack = true; // Saldırı yapılıp yapılamayacağını kontrol eder
 
     public void Attack()
     {
-        anim.SetBool("isAttacking", true);
+        if (canAttack)
+        {
+            anim.SetBool("isAttacking", true);
+            canAttack = false;
+            StartCoroutine(CooldownCoroutine()); // Cooldown sürecini başlat
+        }
     }
 
     public void FinishAttacking()
@@ -26,5 +32,12 @@ public class Player_Combat : MonoBehaviour
         {
             enemies[0].GetComponent<Enemy_Health>().ChangeHealth(-damage);
         }
+    }
+
+    // Cooldown için coroutine
+    IEnumerator CooldownCoroutine()
+    {
+        yield return new WaitForSeconds(attackCooldown); // Belirlenen süre kadar bekle
+        canAttack = true; // Saldırı tekrar yapılabilir hale gelsin
     }
 }

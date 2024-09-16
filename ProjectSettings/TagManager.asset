@@ -50,3 +50,6 @@ TagManager:
   - name: PLAYER
     uniqueID: 14899871
     locked: 0
+  - name: PARTICLE
+    uniqueID: 899779257
+    locked: 0

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8923192306443160733}
   - component: {fileID: 2886720839673971755}
   - component: {fileID: 8151295734616993042}
+  - component: {fileID: -684849801364950379}
   m_Layer: 3
   m_Name: Enemy_Golem
   m_TagString: Enemy
@@ -225,6 +226,20 @@ MonoBehaviour:
   currentHealth: 10
   maxHealth: 10
   scoreValue: 10
+--- !u!114 &-684849801364950379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3792870441612770052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f53a234f4b41a1f45929fab8f85d63f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleEffect: {fileID: 8444333748028503278, guid: ec1583f2403555943b41064012fbe763, type: 3}
+  destroyDelay: 0.5
 --- !u!1 &6111650450045135449
 GameObject:
   m_ObjectHideFlags: 0
